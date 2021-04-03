@@ -1,0 +1,252 @@
+[
+    {
+        "id": "1fea8b5f.905175",
+        "type": "rpi-dht22",
+        "z": "ce8f3948.449658",
+        "name": "",
+        "topic": "rpi-dht22",
+        "dht": 22,
+        "pintype": "0",
+        "pin": "17",
+        "x": 480,
+        "y": 220,
+        "wires": [
+            [
+                "d9c87f3f.b0e77",
+                "588f231.f7c2cdc"
+            ]
+        ]
+    },
+    {
+        "id": "80959dc3.050ea",
+        "type": "debug",
+        "z": "ce8f3948.449658",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 910,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "a501e675.587cf8",
+        "type": "mysql",
+        "z": "ce8f3948.449658",
+        "mydb": "e30ced8d.4dfcc",
+        "name": "",
+        "x": 900,
+        "y": 220,
+        "wires": [
+            [
+                "baab9631.d479a8"
+            ]
+        ]
+    },
+    {
+        "id": "d9c87f3f.b0e77",
+        "type": "function",
+        "z": "ce8f3948.449658",
+        "name": "prepareQuery",
+        "func": "// Prepare the MySQL query\nvar temperature = parseFloat(msg.payload);\nvar humdity = parseFloat(msg.humidity);\nvar timestamp = new Date();\ntimestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');  //Format the timestamp to DATETIME mysql compatible format\nmsg.payload=[timestamp, temperature, humdity];\nmsg.topic=\"INSERT INTO airSensorOffice (`timestamp`, `temperature`,`humidity`) VALUES (?, ?, ?);\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 680,
+        "y": 220,
+        "wires": [
+            [
+                "80959dc3.050ea",
+                "a501e675.587cf8"
+            ]
+        ]
+    },
+    {
+        "id": "baab9631.d479a8",
+        "type": "debug",
+        "z": "ce8f3948.449658",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 1110,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "e72df9f.eb94208",
+        "type": "comment",
+        "z": "ce8f3948.449658",
+        "name": "MySQL INSERT DHT22 sensor",
+        "info": "This flow is about inserting the temperature and the humidity from a DHT22 to a MySQL database on a periodic base.",
+        "x": 168,
+        "y": 90.00000286102295,
+        "wires": []
+    },
+    {
+        "id": "7898a632.93bc38",
+        "type": "cron",
+        "z": "ce8f3948.449658",
+        "name": "Cron : Every hour at 10 minutes",
+        "cronExpression": "10 * * * *",
+        "fireAtStartup": false,
+        "x": 170,
+        "y": 280,
+        "wires": [
+            [
+                "1fea8b5f.905175"
+            ]
+        ]
+    },
+    {
+        "id": "58327c83.cb7ba4",
+        "type": "cron",
+        "z": "ce8f3948.449658",
+        "name": "Cron : Every hour at 20 minutes",
+        "cronExpression": "20 * * * *",
+        "fireAtStartup": false,
+        "x": 170,
+        "y": 340,
+        "wires": [
+            [
+                "1fea8b5f.905175"
+            ]
+        ]
+    },
+    {
+        "id": "6bdc8497.80c03c",
+        "type": "cron",
+        "z": "ce8f3948.449658",
+        "name": "Cron : Every hour at 00 minutes",
+        "cronExpression": "0 * * * *",
+        "fireAtStartup": false,
+        "x": 170,
+        "y": 220,
+        "wires": [
+            [
+                "1fea8b5f.905175"
+            ]
+        ]
+    },
+    {
+        "id": "364c960c.0ea34a",
+        "type": "cron",
+        "z": "ce8f3948.449658",
+        "name": "Cron : Every hour at 30 minutes",
+        "cronExpression": "30 * * * *",
+        "fireAtStartup": false,
+        "x": 170,
+        "y": 400,
+        "wires": [
+            [
+                "1fea8b5f.905175"
+            ]
+        ]
+    },
+    {
+        "id": "de4ac107.d7aff",
+        "type": "cron",
+        "z": "ce8f3948.449658",
+        "name": "Cron : Every hour at 40 minutes",
+        "cronExpression": "40 * * * *",
+        "fireAtStartup": false,
+        "x": 170,
+        "y": 460,
+        "wires": [
+            [
+                "1fea8b5f.905175"
+            ]
+        ]
+    },
+    {
+        "id": "5024a164.f638e",
+        "type": "cron",
+        "z": "ce8f3948.449658",
+        "name": "Cron : Every hour at 50 minutes",
+        "cronExpression": "50 * * * *",
+        "fireAtStartup": false,
+        "x": 170,
+        "y": 520,
+        "wires": [
+            [
+                "1fea8b5f.905175"
+            ]
+        ]
+    },
+    {
+        "id": "3bc76378.da133c",
+        "type": "inject",
+        "z": "ce8f3948.449658",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 125.513671875,
+        "y": 149.97851467132568,
+        "wires": [
+            [
+                "1fea8b5f.905175"
+            ]
+        ]
+    },
+    {
+        "id": "95c68eb5.8c835",
+        "type": "mqtt out",
+        "z": "ce8f3948.449658",
+        "name": "",
+        "topic": "iotHome\\homeAirSensor",
+        "qos": "",
+        "retain": "",
+        "broker": "c63b29b9.67f058",
+        "x": 959.5117034912109,
+        "y": 471.82231044769287,
+        "wires": []
+    },
+    {
+        "id": "588f231.f7c2cdc",
+        "type": "function",
+        "z": "ce8f3948.449658",
+        "name": "Build the MQTT payload",
+        "func": "// Prepare the mqtt payload \nvar temperature = parseFloat(msg.payload);\nvar humidity = parseFloat(msg.humidity);\nvar timestamp = new Date();\ntimestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');  //Format the timestamp to DATETIME mysql compatible format\nmsg.payload={ \"timestamp\" : timestamp, \"temperature\" : temperature, \"humidity\" : humidity} ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 690.2597503662109,
+        "y": 471.61330223083496,
+        "wires": [
+            [
+                "95c68eb5.8c835"
+            ]
+        ]
+    },
+    {
+        "id": "e30ced8d.4dfcc",
+        "type": "MySQLdatabase",
+        "z": "",
+        "name": "",
+        "host": "tontome.me",
+        "port": "3306",
+        "db": "iotHome",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "c63b29b9.67f058",
+        "type": "mqtt-broker",
+        "z": "",
+        "broker": "192.168.10.4",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    }
+]
