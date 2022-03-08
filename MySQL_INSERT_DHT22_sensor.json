@@ -196,7 +196,7 @@
         "type": "mqtt out",
         "z": "ce8f3948.449658",
         "name": "",
-        "topic": "iotHome\\homeAirSensor",
+        "topic": "iotHome/homeAirSensor",
         "qos": "",
         "retain": "",
         "broker": "c63b29b9.67f058",
